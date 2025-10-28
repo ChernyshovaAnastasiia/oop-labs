@@ -12,30 +12,30 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	
-	int n; 
+	int k; 
 
 	while (true) {
-		printf("Введіть кількість грибів n > ");
-		if (scanf("%d", &n) != 1 || n <= 0) {
-			printf("Некоректне введення числа n\n");
+		printf("Введіть кількість грибів k > ");
+		if (scanf("%d", &k) != 1 || k <= 0) {
+			printf("Некоректне введення числа k\n");
 			return 1;
 		}
 
-        if (n % 100 >= 11 && n % 100 <= 14) {
-            printf("%d грибів\n", n);
+        if (k % 100 >= 11 && k % 100 <= 14) {
+            printf("у мене %d грибів\n", k);
         }
         else {
-            switch (n % 10) {
+            switch (k % 10) {
             case 1:
-                printf("%d гриб\n", n);
+                printf("у мене %d гриб\n", k);
                 break;
             case 2:
             case 3:
             case 4:
-                printf("%d гриба\n", n);
+                printf("у мене %d гриба\n", k);
                 break;
             default:
-                printf("%d грибів\n", n);
+                printf("у мене %d грибів\n", k);
                 break;
             }
         }
