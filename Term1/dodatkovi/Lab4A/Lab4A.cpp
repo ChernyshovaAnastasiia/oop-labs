@@ -25,7 +25,10 @@ int main()
     for (int i = 1; ; i++)
     {
         printf("Спроба %d. Введіть число > ", i);
-        scanf("%d", &n);
+        if (scanf("%d", &n) != 1) {
+            printf("Некоректне введення числа\n");
+            return 1;
+        }
 
         if (n > x)
             printf("Менше\n");
