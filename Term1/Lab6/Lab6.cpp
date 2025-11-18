@@ -14,10 +14,10 @@ int main()
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
 
-            if ((i >= j) && (j <= N - 1 - i)) {
+            if ((j < i) && (j < N - 1 - i)) {
                 a[i][j] = k++;
             }
-            else if ((i <= j) && (j >= N - 1 - i)) {
+            else if ((j > i) && (j > N - 1 - i)) {
                 a[i][j] = k++;
             }
         }
