@@ -10,7 +10,7 @@ using namespace std;
 #define N 3
 #define M 3
 
-void Fun(int mas1[]);
+double Fun(int mas1[]);
 
 int main()
 {
@@ -24,14 +24,16 @@ int main()
         cout << setw(4) << mas1[i];
     cout << endl;
      
-	Fun(mas1);
+    double result = Fun(mas1);
+
+    cout << "\n\nДобуток середнiх значень стовпцiв -> " << result << endl;
 
     cout << "\nОдновимiрний масив (пiсля функцiї) ->\n";
     for (int i = 0; i < N * M; i++)
         cout << setw(4) << mas1[i];
 }
 
-void Fun(int mas1[])
+double Fun(int mas1[])
 {
     int mas2[N][M];
     double avg[M];
@@ -73,6 +75,12 @@ void Fun(int mas1[])
         for (int j = 0; j < M; j++)
             mas1[i * M + j] = mas2[i][j];
 
+
+    double result = 1;
+    for (int j = 0; j < M; j++)
+        result *= avg[j];
+
+        return result; 
 }
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
