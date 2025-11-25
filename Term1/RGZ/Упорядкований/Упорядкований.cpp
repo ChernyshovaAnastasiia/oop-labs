@@ -1,4 +1,4 @@
-﻿#include <iostream>
+﻿#include <iostream>    
 #include <vector>
 #include <chrono>
 #include <windows.h>
@@ -33,7 +33,6 @@ void blockSort(int arr[], int n) {
         buckets[index].push_back(arr[i]);
     }
 
-    // Сортування всередині блоків
     for (int i = 0; i < n; i++) {
         for (int j = 1; j < buckets[i].size(); j++) {
             int temp = buckets[i][j];
@@ -60,27 +59,21 @@ void printArray(int arr[], int n) {
 }
 
 int main() {
-
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    const int REPEAT = 100; 
-
     vector<int> allowed = { 5,10,15,20,25,30,35,40,45 };
+    int arrFull[45] = { 20, 5, 12, 8, 3, 25, 15, 18, 7, 10,
+                        1, 9, 14, 11, 4, 6, 2, 13, 16, 17,
+                        19, 21, 22, 23, 24, 26, 27, 28, 29, 30,
+                        31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                        41, 42, 43, 44, 45 };
 
-    // Фіксований масив
-    int arrFull[45] = {
-        20, 5, 12, 8, 3, 25, 15, 18, 7, 10,
-        1, 9, 14, 11, 4, 6, 2, 13, 16, 17,
-        19, 21, 22, 23, 24, 26, 27, 28, 29, 30,
-        31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-        41, 42, 43, 44, 45
-    };
+    const int REPEATS = 100;  
 
     bool exitProgram = false;
 
     while (!exitProgram) {
-
         int n;
         cout << "\nОберіть кількість елементів (5,10,15,20,25,30,35,40,45): ";
         cin >> n;
@@ -88,75 +81,58 @@ int main() {
         bool valid = false;
         for (int x : allowed)
             if (x == n) valid = true;
-
         if (!valid) {
             cout << "Неправильна кількість елементів." << endl;
             continue;
         }
 
-        // Вивід обраного масиву
-        cout << "\nВибраний масив (" << n << " елементів):\n";
-        printArray(arrFull, n);
+        long long totalTimeShell = 0;  
+        long long totalTimeBlock = 0;  
 
-		// Середній час виконання
+        cout << "\nВсі 100 кроків сортування:\n";
 
-        long long totalShell = 0;
-        long long totalBlock = 0;
+        for (int step = 1; step <= REPEATS; step++) {
+            int* arrShell = new int[n];
+            int* arrBlock = new int[n];
 
-        // Середній час для Шелла
-        for (int r = 0; r < REPEAT; r++) {
-            int* temp = new int[n];
-            for (int i = 0; i < n; i++) temp[i] = arrFull[i];
+            for (int i = 0; i < n; i++) {
+                arrShell[i] = arrFull[i];
+                arrBlock[i] = arrFull[i];
+            }
 
-            auto start = high_resolution_clock::now();
-            shellSort(temp, n);
-            auto end = high_resolution_clock::now();
+            // Час сортування Шелла
+            auto startShell = high_resolution_clock::now();
+            shellSort(arrShell, n);
+            auto endShell = high_resolution_clock::now();
+            auto timeShell = duration_cast<nanoseconds>(endShell - startShell).count();
+            totalTimeShell += timeShell;
 
-            totalShell += duration_cast<nanoseconds>(end - start).count();
-            delete[] temp;
+            // Час блокового сортування
+            auto startBlock = high_resolution_clock::now();
+            blockSort(arrBlock, n);
+            auto endBlock = high_resolution_clock::now();
+            auto timeBlock = duration_cast<nanoseconds>(endBlock - startBlock).count();
+            totalTimeBlock += timeBlock;
+
+            // Вивід часу для кожного кроку
+            cout << "Крок " << step << ": Шелла = " << timeShell
+                << " нс, Блокове = " << timeBlock << " нс\n";
+
+            delete[] arrShell;
+            delete[] arrBlock;
         }
 
-        // Середній час для блокового сортування
-        for (int r = 0; r < REPEAT; r++) {
-            int* temp = new int[n];
-            for (int i = 0; i < n; i++) temp[i] = arrFull[i];
+        // Середнє значення часу
+        double avgShell = totalTimeShell / (double)REPEATS;
+        double avgBlock = totalTimeBlock / (double)REPEATS;
 
-            auto start = high_resolution_clock::now();
-            blockSort(temp, n);
-            auto end = high_resolution_clock::now();
+        cout << "\nСередній час після " << REPEATS << " повторів:\n";
+        cout << "Шелла: " << avgShell << " нс\n";
+        cout << "Блокове: " << avgBlock << " нс\n";
 
-            totalBlock += duration_cast<nanoseconds>(end - start).count();
-            delete[] temp;
-        }
-
-        long long avgShell = totalShell / REPEAT;
-        long long avgBlock = totalBlock / REPEAT;
-
-		// Вивід результатів
-
-        cout << "\nМасив після сортування Шелла:\n";
-        int* arrShell = new int[n];
-        for (int i = 0; i < n; i++) arrShell[i] = arrFull[i];
-        shellSort(arrShell, n);
-        printArray(arrShell, n);
-        delete[] arrShell;
-
-        cout << "Середній час (Шелла): " << avgShell << " наносекунд\n";
-
-        cout << "\nМасив після блокового сортування:\n";
-        int* arrBlock = new int[n];
-        for (int i = 0; i < n; i++) arrBlock[i] = arrFull[i];
-        blockSort(arrBlock, n);
-        printArray(arrBlock, n);
-        delete[] arrBlock;
-
-        cout << "Середній час (Блокове): " << avgBlock << " наносекунд\n";
-
-        // Повтор програми
         cout << "\nБажаєте повторити з іншою кількістю елементів? (1 — Так, 0 — Вихід): ";
         int choice;
         cin >> choice;
-
         if (choice == 0) exitProgram = true;
     }
 
