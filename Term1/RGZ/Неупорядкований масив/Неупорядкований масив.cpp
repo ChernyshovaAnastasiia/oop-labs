@@ -1,5 +1,4 @@
 ﻿#include <iostream>
-#include <vector>
 #include <chrono>
 #include <windows.h>
 #include <cstdlib> 
@@ -29,28 +28,37 @@ void blockSort(int arr[], int n) {
         if (arr[i] > maxVal)
             maxVal = arr[i];
 
-    vector<vector<int>> buckets(n);
+    int buckets[45][45]; 
+    int bucketSize[45] = { 0 };
+
+	// Розкладання по блоках
     for (int i = 0; i < n; i++) {
         int index = (arr[i] * n) / (maxVal + 1);
-        buckets[index].push_back(arr[i]);
+        int pos = bucketSize[index];
+        buckets[index][pos] = arr[i];
+        bucketSize[index]++;
     }
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 1; j < buckets[i].size(); j++) {
-            int temp = buckets[i][j];
+	// Сортування всередині блоків 
+    for (int b = 0; b < n; b++) {
+        for (int j = 1; j < bucketSize[b]; j++) {
+            int temp = buckets[b][j];
             int k = j - 1;
-            while (k >= 0 && buckets[i][k] > temp) {
-                buckets[i][k + 1] = buckets[i][k];
+            while (k >= 0 && buckets[b][k] > temp) {
+                buckets[b][k + 1] = buckets[b][k];
                 k--;
             }
-            buckets[i][k + 1] = temp;
+            buckets[b][k + 1] = temp;
         }
     }
 
+	// Запис назад у масив
     int idx = 0;
-    for (int i = 0; i < n; i++)
-        for (int x : buckets[i])
-            arr[idx++] = x;
+    for (int b = 0; b < n; b++) {
+        for (int i = 0; i < bucketSize[b]; i++) {
+            arr[idx++] = buckets[b][i];
+        }
+    }
 }
 
 // Вивід масиву 
@@ -64,7 +72,7 @@ int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    vector<int> allowed = { 5,10,15,20,25,30,35,40,45 };
+    int allowed[9] = { 5,10,15,20,25,30,35,40,45 };
     srand(static_cast<unsigned>(time(0))); 
 
     bool exitProgram = false;
