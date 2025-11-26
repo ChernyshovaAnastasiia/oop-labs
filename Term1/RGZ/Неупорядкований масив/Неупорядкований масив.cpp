@@ -125,8 +125,6 @@ int main() {
         printArray(arrBlock, n);
         cout << "Час (Блокове): " << timeBlock.count() << " наносекунд\n";
 
-        delete[] arrShell;
-        delete[] arrBlock;
 
         // 
         cout << "\nБажаєте повторити з іншою кількістю елементів? (1 — Так, 0 — Вихід): ";
