@@ -7,8 +7,8 @@
 #include <ctime>
 using namespace std;
 
-#define DEBUG  
-#define PRINT_TYPE 1
+//#define DEBUG  
+#define PRINT_TYPE 0
 
 struct OfficePackage {
     string name;
