@@ -2,7 +2,7 @@
 
 void printHeader() {
     cout << "\n" << setfill('-') << setw(65) << "-" << setfill(' ') << endl;
-    cout << "| " << left << setw(61) << "Офісні пакети (Бінарний ...)" << " |" << endl;
+    cout << "| " << left << setw(61) << "Офісні пакети" << " |" << endl;
     cout << "|" << setfill('-') << setw(63) << "-" << setfill(' ') << "|" << endl;
     cout << "|" << setw(15) << "Найменування" << "|" << setw(15) << "Виробник"
         << "|" << setw(20) << "К-сть складових" << "|" << setw(10) << "Ціна ($)" << "|" << endl;
