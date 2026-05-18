@@ -8,7 +8,7 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    const int SIZE = 100;
+    const int SIZE = 10;
 
     while (true)
     {
