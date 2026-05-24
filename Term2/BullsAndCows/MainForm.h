@@ -169,7 +169,7 @@ namespace BullsAndCows {
 			this->BackColor = System::Drawing::SystemColors::Control;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->ClientSize = System::Drawing::Size(585, 471);
+			this->ClientSize = System::Drawing::Size(744, 712);
 			this->Controls->Add(this->buttonExit);
 			this->Controls->Add(this->buttonRules);
 			this->Controls->Add(this->buttonGiveUp);
