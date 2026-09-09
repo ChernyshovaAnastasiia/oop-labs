@@ -1,0 +1,4 @@
+3
+Office Microsoft 4 870
+SmartSuite Lotus 5 1020
+StarOffice Sun 4 9
