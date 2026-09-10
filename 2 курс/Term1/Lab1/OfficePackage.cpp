@@ -2,6 +2,8 @@
 #include "OfficePackage.h"
 #include <iostream>
 #include <cstring>
+#include <iomanip>
+using namespace std;
 
 OfficePackage::OfficePackage() : componentCount(0), price(0.0) {
     name = new char[1];
@@ -61,8 +63,9 @@ int OfficePackage::getComponentCount() const { return componentCount; }
 double OfficePackage::getPrice() const { return price; }
 
 void OfficePackage::show() const {
-    std::cout << name << "\t\t"
-        << manufacturer << "\t\t"
-        << componentCount << "\t\t"
-        << price << std::endl;
+    cout << "| " << left << setw(20) << name
+        << " | " << setw(15) << manufacturer
+        << " | " << setw(15) << componentCount
+        << " | " << setw(10) << price << " |" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
 }
